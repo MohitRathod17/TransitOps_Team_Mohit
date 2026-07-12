@@ -2,7 +2,6 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy.orm import declarative_base
 from app.config import settings
 
-<<<<<<< HEAD
 from urllib.parse import quote_plus
 
 # Determine DB URL: support SQLite for offline local verification if DB_HOST is set to sqlite
@@ -21,12 +20,6 @@ if settings.DB_HOST != "sqlite" and settings.DB_SSL:
         connect_args["ssl"] = True
 
 engine = create_async_engine(DATABASE_URL, connect_args=connect_args, echo=False, future=True)
-=======
-# SQLite database for easy local setup
-DATABASE_URL = "sqlite+aiosqlite:///./transitops.db"
-
-engine = create_async_engine(DATABASE_URL, echo=False, future=True)
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
 AsyncSessionLocal = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 Base = declarative_base()
@@ -40,9 +33,6 @@ async def get_db():
 
 async def init_db():
     async with engine.begin() as conn:
-<<<<<<< HEAD
         # Import all models here to register them with Base.metadata
-=======
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
         from app.models import Base as ModelsBase
         await conn.run_sync(ModelsBase.metadata.create_all)

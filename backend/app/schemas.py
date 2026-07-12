@@ -1,6 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from decimal import Decimal
-<<<<<<< HEAD
 from datetime import date, datetime
 from typing import Optional, List
 from app.models import VehicleStatus, DriverStatus, TripStatus, MaintenanceStatus, ExpenseType
@@ -10,32 +9,16 @@ class BaseConfigModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 # Role
-=======
-from datetime import datetime
-from typing import Optional
-from app.models import VehicleStatus
-
-class BaseConfigModel(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
 class RoleResponse(BaseConfigModel):
     id: int
     name: str
 
-<<<<<<< HEAD
 # User
-=======
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
 class UserCreate(BaseModel):
     email: EmailStr
     password: str = Field(..., min_length=6)
     full_name: str
-<<<<<<< HEAD
     role_name: str # e.g. "Fleet Manager", "Driver", "Safety Officer", "Financial Analyst"
-=======
-    role_name: str
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
 
 class UserLogin(BaseModel):
     email: EmailStr
@@ -57,7 +40,6 @@ class TokenData(BaseModel):
     email: Optional[str] = None
     role: Optional[str] = None
 
-<<<<<<< HEAD
 # Vehicle
 class VehicleCreate(BaseModel):
     registration_number: str = Field(..., min_length=2, max_length=50)
@@ -76,13 +58,6 @@ class VehicleUpdate(BaseModel):
     acquisition_cost: Optional[Decimal] = None
     status: Optional[VehicleStatus] = None
     region: Optional[str] = None
-=======
-class VehicleCreate(BaseModel):
-    registration_number: str = Field(..., min_length=2, max_length=50)
-    model: str = Field(..., min_length=1, max_length=100)
-    type: str = Field(..., min_length=1, max_length=50)
-    max_load_capacity: Decimal = Field(..., gt=0)
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
 
 class VehicleResponse(BaseConfigModel):
     id: int
@@ -90,7 +65,6 @@ class VehicleResponse(BaseConfigModel):
     model: str
     type: str
     max_load_capacity: Decimal
-<<<<<<< HEAD
     odometer: Decimal
     acquisition_cost: Decimal
     status: VehicleStatus
@@ -244,7 +218,3 @@ class VehicleROIAnalytics(BaseModel):
     total_maintenance: Decimal
     total_fuel: Decimal
     roi: Decimal # (revenue - (maintenance + fuel)) / acquisition_cost
-=======
-    status: VehicleStatus
-    created_at: datetime
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1

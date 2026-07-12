@@ -23,10 +23,7 @@ async def ensure_role(db: AsyncSession, role_name: str) -> Role:
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def register(user_in: UserCreate, db: AsyncSession = Depends(get_db)):
-<<<<<<< HEAD
     # Check if user already exists
-=======
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
     result = await db.execute(select(User).filter(User.email == user_in.email))
     if result.scalars().first():
         raise HTTPException(
@@ -34,26 +31,16 @@ async def register(user_in: UserCreate, db: AsyncSession = Depends(get_db)):
             detail="Email already registered"
         )
     
-<<<<<<< HEAD
     # Validate and get/create role
-=======
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
     allowed_roles = ["Fleet Manager", "Driver", "Safety Officer", "Financial Analyst"]
     if user_in.role_name not in allowed_roles:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-<<<<<<< HEAD
             detail=f"Invalid role. Allowed roles are: {allowed_roles}"
         )
     
     role = await ensure_role(db, user_in.role_name)
     
-=======
-            detail="Invalid role"
-        )
-    
-    role = await ensure_role(db, user_in.role_name)
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
     hashed_password = get_password_hash(user_in.password)
     user = User(
         email=user_in.email,
@@ -64,10 +51,7 @@ async def register(user_in: UserCreate, db: AsyncSession = Depends(get_db)):
     db.add(user)
     await db.commit()
     
-<<<<<<< HEAD
     # Re-fetch user with loaded role
-=======
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
     result = await db.execute(
         select(User).options(selectinload(User.role)).filter(User.id == user.id)
     )
@@ -82,12 +66,8 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSessi
     if not user or not verify_password(form_data.password, user.password_hash):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-<<<<<<< HEAD
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
-=======
-            detail="Incorrect email or password"
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
         )
     
     access_token = create_access_token(

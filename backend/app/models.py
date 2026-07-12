@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 from sqlalchemy import Column, Integer, String, Numeric, ForeignKey, Date, DateTime, Text, Enum, func
-=======
-from sqlalchemy import Column, Integer, String, Numeric, ForeignKey, DateTime, Enum, func
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
 from sqlalchemy.orm import relationship
 from app.database import Base
 import enum
@@ -13,7 +9,6 @@ class VehicleStatus(str, enum.Enum):
     IN_SHOP = "In Shop"
     RETIRED = "Retired"
 
-<<<<<<< HEAD
 class DriverStatus(str, enum.Enum):
     AVAILABLE = "Available"
     ON_TRIP = "On Trip"
@@ -36,17 +31,11 @@ class ExpenseType(str, enum.Enum):
     INSURANCE = "Insurance"
     OTHER = "Other"
 
-=======
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
 class Role(Base):
     __tablename__ = "roles"
 
     id = Column(Integer, primary_key=True, index=True)
-<<<<<<< HEAD
     name = Column(String(50), unique=True, nullable=False) # e.g., "Fleet Manager", "Driver", "Safety Officer", "Financial Analyst"
-=======
-    name = Column(String(50), unique=True, nullable=False)
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
 
     users = relationship("User", back_populates="role")
 
@@ -61,10 +50,7 @@ class User(Base):
     created_at = Column(DateTime, server_default=func.now())
 
     role = relationship("Role", back_populates="users")
-<<<<<<< HEAD
     driver_profile = relationship("Driver", back_populates="user", uselist=False)
-=======
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
 
 class Vehicle(Base):
     __tablename__ = "vehicles"
@@ -72,7 +58,6 @@ class Vehicle(Base):
     id = Column(Integer, primary_key=True, index=True)
     registration_number = Column(String(50), unique=True, nullable=False, index=True)
     model = Column(String(100), nullable=False)
-<<<<<<< HEAD
     type = Column(String(50), nullable=False) # e.g., Van, Truck, Semi, Car
     max_load_capacity = Column(Numeric(10, 2), nullable=False) # in kg
     odometer = Column(Numeric(12, 2), nullable=False, default=0.00) # in km
@@ -169,9 +154,3 @@ class Expense(Base):
     created_at = Column(DateTime, server_default=func.now())
 
     vehicle = relationship("Vehicle", back_populates="expenses")
-=======
-    type = Column(String(50), nullable=False)
-    max_load_capacity = Column(Numeric(10, 2), nullable=False)
-    status = Column(Enum(VehicleStatus), nullable=False, default=VehicleStatus.AVAILABLE)
-    created_at = Column(DateTime, server_default=func.now())
->>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
