@@ -1,12 +1,18 @@
 fastapi==0.111.0
 uvicorn[standard]==0.30.1
 sqlalchemy==2.0.31
+<<<<<<< HEAD
 aiomysql==0.2.0
 aiosqlite==0.20.0
 pymysql==1.1.1
 pydantic==2.7.4
 pydantic-settings==2.3.4
 pydantic[email]
+=======
+aiosqlite==0.20.0
+pydantic==2.7.4
+pydantic-settings==2.3.4
+>>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
 pyjwt==2.8.0
 passlib[bcrypt]==1.7.4
 python-multipart==0.0.9

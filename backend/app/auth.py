@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import bcrypt
+=======
+from passlib.context import CryptContext
+>>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
 from datetime import datetime, timedelta, timezone
 from typing import Optional, List
 from fastapi import Depends, HTTPException, status
@@ -10,6 +14,7 @@ from sqlalchemy.orm import selectinload
 
 from app.config import settings
 from app.database import get_db
+<<<<<<< HEAD
 from app.models import User, Role
 from app.schemas import TokenData
 
@@ -23,6 +28,19 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def get_password_hash(password: str) -> str:
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+=======
+from app.models import User
+from app.schemas import TokenData
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login")
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)
+
+def get_password_hash(password: str) -> str:
+    return pwd_context.hash(password)
+>>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     to_encode = data.copy()
@@ -50,7 +68,10 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: AsyncSession
     except jwt.PyJWTError:
         raise credentials_exception
     
+<<<<<<< HEAD
     # Eagerly load the role object using selectinload
+=======
+>>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
     result = await db.execute(
         select(User)
         .options(selectinload(User.role))
@@ -70,6 +91,10 @@ class RoleChecker:
             role_name = current_user.role.name if current_user.role else "Unknown"
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
+<<<<<<< HEAD
                 detail=f"Operation not permitted for role '{role_name}'. Required roles: {self.allowed_roles}",
+=======
+                detail=f"Operation not permitted for role '{role_name}'",
+>>>>>>> 4743ddb1fcc3073d38e552c7334c81c51575aae1
             )
         return current_user
